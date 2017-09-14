@@ -13,13 +13,31 @@ fi_raw = fi_raw.transpose()
 
 y_pred = KMeans(n_clusters=10).fit_predict(fi_raw)
 fi_raw = np.column_stack((fi_raw, y_pred.T))
-print(fi_raw)
+#print(fi_raw)
+head = ['x', 'y', 'z', 'field_number']
+df = pd.DataFrame(fi_raw, columns=head)
+#print(df)
 
 # Figure
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 plt.tight_layout()
 
-ax.scatter(fi_raw[:, 0], fi_raw[:, 1], fi_raw[:, 2], c=y_pred)
+color = (172/255, 225/255, 174/255, 1)
+grouped = df.groupby('field_number')
+for name, group in grouped:
+    print(name)
+    #print(group)
+    verts_field = [list(zip(group['x'], group['y'], group['z']))]
+    print(verts_field)
+    expl = mp3d.art3d.Poly3DCollection(verts_field, linewidth=0.2)
+    expl.set_facecolor(color)
+    expl.set_edgecolor('k')
+    ax.add_collection3d(expl)
+
+#ax.scatter(fi_raw[:, 0], fi_raw[:, 1], fi_raw[:, 2], c=y_pred)
+ax.set_xlim([20.4, 20.6])
+ax.set_ylim([49.775, 49.875])
+ax.set_zlim([-700, -300])
 
 plt.show()
