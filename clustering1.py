@@ -25,6 +25,7 @@ plt.tight_layout()
 
 color = (172/255, 225/255, 174/255, 1)
 grouped = df.groupby('field_number')
+df.sort_values(['x', 'y'], inplace=True)
 for name, group in grouped:
     print(name)
     #print(group)
@@ -36,8 +37,8 @@ for name, group in grouped:
     ax.add_collection3d(expl)
 
 #ax.scatter(fi_raw[:, 0], fi_raw[:, 1], fi_raw[:, 2], c=y_pred)
-ax.set_xlim([20.4, 20.6])
-ax.set_ylim([49.775, 49.875])
+ax.set_xlim([np.min(df['x']), np.max(df['x'])])
+ax.set_ylim([np.min(df['y']), np.max(df['y'])])
 ax.set_zlim([-700, -300])
 
 plt.show()
