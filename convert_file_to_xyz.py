@@ -48,7 +48,7 @@ def convert_asc_xyz(filename='DEM_file1.asc', headlines=6):
     output_filename = 'xyz_file1.dat'
     np.savetxt(output_filename, xyz1)
     print(output_filename + ' was saved.')
-    
+
     return xyz
 
 xyz = convert_asc_xyz()
